@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keranjang Belanja - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="app">
+
+<div class="page active" id="pg-cart">
+  <div class="pg-header">
+    <button class="back-btn" onclick="window.location.href='index.html'"><i class="ti ti-arrow-left"></i></button>
+    <h2>Keranjang Belanja</h2>
+  </div>
+  <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column" id="cart-content"></div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+<script src="index.js"></script>
+<script>renderCart();</script>
+</body>
+</html>

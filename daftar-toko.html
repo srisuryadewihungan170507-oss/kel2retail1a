@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar Jadi Penjual - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="daftar-toko.css">
+</head>
+<body>
+
+<div class="reg-page">
+  <div class="reg-box">
+
+    <div class="reg-header">
+      <div class="reg-logo">GoMART</div>
+      <h1><i class="ti ti-building-store"></i> Daftar Jadi Penjual</h1>
+      <p>Buka tokomu dan mulai berjualan bersama jutaan pembeli</p>
+      <div class="reg-steps">
+        <div class="reg-step-dot active" id="dot-1"></div>
+        <div class="reg-step-dot" id="dot-2"></div>
+      </div>
+    </div>
+
+    <!-- ===== FORM PENDAFTARAN ===== -->
+    <div id="reg-form-wrap">
+
+      <div class="reg-body">
+        <div class="reg-benefits">
+          <div class="reg-benefit"><i class="ti ti-users"></i><span>Jutaan Pembeli Aktif</span></div>
+          <div class="reg-benefit"><i class="ti ti-truck-delivery"></i><span>Pengiriman Terintegrasi</span></div>
+          <div class="reg-benefit"><i class="ti ti-headset"></i><span>Support 24/7</span></div>
+        </div>
+
+        <div class="reg-error" id="reg-error"><i class="ti ti-alert-circle"></i> <span id="reg-error-msg">Mohon lengkapi data yang wajib diisi</span></div>
+
+        <!-- STEP 1: INFO TOKO -->
+        <div id="reg-step-1">
+          <div class="reg-section-title"><i class="ti ti-building-store"></i> Informasi Toko</div>
+
+          <div class="form-grp">
+            <label>Nama Toko</label>
+            <input type="text" id="toko-nama" placeholder="Contoh: Berkah Jaya Grocery">
+          </div>
+
+          <div class="form-row">
+            <div class="form-grp">
+              <label>Kategori Toko</label>
+              <select id="toko-kategori">
+                <option value="">Pilih kategori</option>
+                <option>Makanan</option>
+                <option>Minuman</option>
+                <option>Kebutuhan Rumah Tangga</option>
+                <option>Perawatan Diri</option>
+                <option>Snack</option>
+                <option>Perlengkapan Dapur</option>
+                <option>Perlengkapan Bayi</option>
+                <option>Kesehatan</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+            <div class="form-grp">
+              <label>Kota / Kabupaten</label>
+              <input type="text" id="toko-kota" placeholder="Contoh: Surabaya">
+            </div>
+          </div>
+
+          <div class="form-grp">
+            <label>Alamat Lengkap Toko</label>
+            <input type="text" id="toko-alamat" placeholder="Jalan, nomor, kecamatan, kode pos">
+          </div>
+
+          <div class="form-grp">
+            <label>Deskripsi Toko <span class="opt">(opsional)</span></label>
+            <textarea id="toko-deskripsi" placeholder="Ceritakan singkat tentang toko dan produk yang kamu jual"></textarea>
+          </div>
+
+          <div class="reg-btn-row">
+            <button class="reg-btn reg-btn-primary" onclick="goToStep2()">Lanjut <i class="ti ti-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- STEP 2: INFO PEMILIK & AKUN -->
+        <div id="reg-step-2" style="display:none">
+          <div class="reg-section-title"><i class="ti ti-user"></i> Data Pemilik & Akun</div>
+
+          <div class="form-grp">
+            <label>Nama Lengkap Pemilik</label>
+            <input type="text" id="pemilik-nama" placeholder="Sesuai KTP">
+          </div>
+
+          <div class="form-row">
+            <div class="form-grp">
+              <label>Email</label>
+              <input type="text" id="pemilik-email" placeholder="nama@email.com">
+            </div>
+            <div class="form-grp">
+              <label>No. HP / WhatsApp</label>
+              <input type="text" id="pemilik-hp" placeholder="0812-xxxx-xxxx">
+            </div>
+          </div>
+
+          <div class="form-grp">
+            <label>Nomor KTP / NIK <span class="opt">(untuk verifikasi)</span></label>
+            <input type="text" id="pemilik-ktp" placeholder="16 digit NIK" maxlength="16">
+          </div>
+
+          <div class="form-grp">
+            <label>Buat Kata Sandi</label>
+            <div class="pw-wrap">
+              <input type="password" id="pemilik-password" placeholder="Minimal 6 karakter">
+              <button type="button" class="pw-toggle" onclick="togglePw('pemilik-password','eye-1')"><i class="ti ti-eye" id="eye-1"></i></button>
+            </div>
+          </div>
+
+          <div class="form-grp">
+            <label>Konfirmasi Kata Sandi</label>
+            <div class="pw-wrap">
+              <input type="password" id="pemilik-password2" placeholder="Ulangi kata sandi" onkeypress="if(event.key==='Enter')submitRegistration()">
+              <button type="button" class="pw-toggle" onclick="togglePw('pemilik-password2','eye-2')"><i class="ti ti-eye" id="eye-2"></i></button>
+            </div>
+          </div>
+
+          <label class="reg-terms">
+            <input type="checkbox" id="reg-agree">
+            <span>Saya menyetujui <a onclick="showToast('📄 Syarat & Ketentuan Penjual GoMART')">Syarat & Ketentuan</a> dan <a onclick="showToast('🔒 Kebijakan Privasi GoMART')">Kebijakan Privasi</a> sebagai Mitra Penjual GoMART</span>
+          </label>
+
+          <div class="reg-btn-row">
+            <button class="reg-btn reg-btn-secondary" onclick="goToStep1()"><i class="ti ti-arrow-left"></i> Kembali</button>
+            <button class="reg-btn reg-btn-primary" onclick="submitRegistration()"><i class="ti ti-send"></i> Kirim Pendaftaran</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="reg-footer">
+        Sudah punya akun toko? <a href="user-login.html">Masuk di sini</a><br><br>
+        <a href="index.html"><i class="ti ti-arrow-left"></i> Kembali ke Beranda</a>
+      </div>
+    </div>
+
+    <!-- ===== HALAMAN SUKSES ===== -->
+    <div class="reg-success" id="reg-success">
+      <div class="reg-success-icon"><i class="ti ti-check"></i></div>
+      <h2>Pendaftaran Berhasil Dikirim!</h2>
+      <p>Terima kasih telah mendaftar sebagai Mitra Penjual GoMART. Tim kami akan meninjau data toko kamu dan menghubungi lewat email/WhatsApp dalam <strong>1-3 hari kerja</strong>.</p>
+      <div class="reg-success-card" id="reg-summary"></div>
+      <div class="reg-btn-row">
+        <a href="index.html" class="reg-btn reg-btn-primary" style="text-decoration:none"><i class="ti ti-home"></i> Kembali ke Beranda</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+
+<script src="daftar-toko.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk / Daftar Akun - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="user-login.css">
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-box">
+    <div class="login-header">
+      <div class="login-logo">Go<span style="color:#B91C1C">MART</span></div>
+      <p>Belanja Mudah, Hidup Lebih Praktis</p>
+      <div class="ulogin-tabs">
+        <div class="ulogin-tab active" id="ulogin-tab-masuk" onclick="switchUloginTab('masuk')">Masuk</div>
+        <div class="ulogin-tab" id="ulogin-tab-daftar" onclick="switchUloginTab('daftar')">Daftar Akun</div>
+      </div>
+    </div>
+    <div class="login-body">
+
+      <!-- PANEL MASUK -->
+      <div class="ulogin-panel active" id="ulogin-panel-masuk">
+        <div class="login-hint"><i class="ti ti-info-circle"></i> Demo: umar@gmail.com / user123</div>
+        <div class="login-error" id="ulogin-error"><i class="ti ti-alert-circle"></i> <span id="ulogin-error-msg">Email atau kata sandi salah</span></div>
+        <div class="form-grp">
+          <label>Email atau No. HP</label>
+          <input type="text" id="ulogin-email" placeholder="Masukkan email atau no. HP" onkeypress="if(event.key==='Enter')doUserLogin()">
+        </div>
+        <div class="form-grp">
+          <label>Kata Sandi</label>
+          <div class="pw-wrap">
+            <input type="password" id="ulogin-password" placeholder="Masukkan kata sandi" onkeypress="if(event.key==='Enter')doUserLogin()">
+            <button type="button" class="pw-toggle" onclick="toggleUloginPw('ulogin-password','ulogin-pw-eye')"><i class="ti ti-eye" id="ulogin-pw-eye"></i></button>
+          </div>
+        </div>
+        <div class="ulogin-forgot"><a onclick="showToast('📧 Link reset kata sandi dikirim ke email kamu')">Lupa Kata Sandi?</a></div>
+        <button class="login-btn" onclick="doUserLogin()"><i class="ti ti-login"></i> Masuk ke Akun</button>
+        <div class="ulogin-divider">atau masuk dengan</div>
+        <div class="ulogin-social-row">
+          <button class="ulogin-social-btn" onclick="showToast('🔵 Menghubungkan ke Google...')"><i class="ti ti-brand-google" style="color:#EA4335"></i> Google</button>
+          <button class="ulogin-social-btn" onclick="showToast('🔵 Menghubungkan ke Facebook...')"><i class="ti ti-brand-facebook" style="color:#1877F2"></i> Facebook</button>
+        </div>
+      </div>
+
+      <!-- PANEL DAFTAR -->
+      <div class="ulogin-panel" id="ulogin-panel-daftar">
+        <div class="login-error" id="uregister-error"><i class="ti ti-alert-circle"></i> <span id="uregister-error-msg">Semua kolom wajib diisi</span></div>
+        <div class="form-grp">
+          <label>Nama Lengkap</label>
+          <input type="text" id="uregister-name" placeholder="Masukkan nama lengkap">
+        </div>
+        <div class="form-grp">
+          <label>Email</label>
+          <input type="text" id="uregister-email" placeholder="Masukkan email">
+        </div>
+        <div class="form-grp">
+          <label>No. HP</label>
+          <input type="text" id="uregister-phone" placeholder="Contoh: 0812-3456-7890">
+        </div>
+        <div class="form-grp">
+          <label>Buat Kata Sandi</label>
+          <div class="pw-wrap">
+            <input type="password" id="uregister-password" placeholder="Minimal 6 karakter" onkeypress="if(event.key==='Enter')doUserRegister()">
+            <button type="button" class="pw-toggle" onclick="toggleUloginPw('uregister-password','uregister-pw-eye')"><i class="ti ti-eye" id="uregister-pw-eye"></i></button>
+          </div>
+        </div>
+        <button class="login-btn" onclick="doUserRegister()"><i class="ti ti-user-plus"></i> Daftar Sekarang</button>
+      </div>
+
+    </div>
+    <div class="login-footer">
+      <a href="daftar-toko.html" style="color:var(--maroon);font-weight:700;cursor:pointer;text-decoration:none"><i class="ti ti-building-store"></i> Ingin Berjualan? Daftar Jadi Penjual</a><br><br>
+      <a href="index.html" style="color:var(--maroon);font-weight:700;cursor:pointer;text-decoration:none"><i class="ti ti-arrow-left"></i> Kembali ke Beranda</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+
+<script src="user-login.js"></script>
+</body>
+</html>

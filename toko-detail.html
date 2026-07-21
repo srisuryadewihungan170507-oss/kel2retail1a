@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Toko - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="app">
+
+<div class="page active" id="pg-store">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="goToStoreList()"><i class="ti ti-arrow-left"></i></button>
+      <h2 id="store-header-title">Toko</h2>
+    </div>
+    <button class="hdr-btn" style="color:white" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot9" class="bnav-dot" style="display:none;top:-4px;right:-6px">0</span>
+    </button>
+  </div>
+  <div class="store-body">
+    <div class="store-banner"></div>
+    <div class="store-header-card" id="store-header-card"></div>
+
+    <div class="store-tabs">
+      <div class="store-tab active" onclick="switchStoreTab('produk',this)">Produk</div>
+      <div class="store-tab" onclick="switchStoreTab('tentang',this)">Tentang Toko</div>
+      <div class="store-tab" onclick="switchStoreTab('ulasan',this)">Ulasan</div>
+    </div>
+
+    <div id="store-tab-produk">
+      <div class="store-search-box">
+        <div class="store-search-row">
+          <input type="text" id="store-prod-search" placeholder="Cari produk di toko ini..." oninput="renderStoreProducts()">
+          <button onclick="renderStoreProducts()"><i class="ti ti-search"></i></button>
+        </div>
+      </div>
+      <div class="store-prod-wrap">
+        <div class="prod-grid" id="store-prod-grid"></div>
+      </div>
+    </div>
+
+    <div id="store-tab-tentang" style="display:none">
+      <div class="store-about-card" id="store-about-content"></div>
+    </div>
+
+    <div id="store-tab-ulasan" style="display:none">
+      <div class="store-review-card">
+        <div class="store-rating-big">
+          <div>
+            <div class="store-rating-num" id="store-rating-num">4.9</div>
+            <div class="store-rating-stars">★★★★★</div>
+            <div class="store-rating-count" id="store-rating-count">dari 1.240 penilaian</div>
+          </div>
+        </div>
+      </div>
+      <div id="store-review-list"></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <button class="bnav-btn" onclick="window.location.href='index.html'"><i class="ti ti-home"></i><span>Beranda</span></button>
+    <button class="bnav-btn" onclick="window.location.href='index.html?goto=promo'"><i class="ti ti-tag"></i><span>Promo</span></button>
+    <button class="bnav-btn" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot10" class="bnav-dot" style="display:none">0</span>
+      <span>Keranjang</span>
+    </button>
+    <button class="bnav-btn" onclick="goToTracking()"><i class="ti ti-truck-delivery"></i><span>Lacak</span></button>
+    <button class="bnav-btn" onclick="goToAccount()"><i class="ti ti-user-circle"></i><span>Akun</span></button>
+  </div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+<script src="index.js"></script>
+<script>
+  (function(){
+    var params=new URLSearchParams(window.location.search);
+    var id=parseInt(params.get('id'),10);
+    if(id)openStore(id);
+    else window.location.href='toko.html';
+  })();
+</script>
+</body>
+</html>

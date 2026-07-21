@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lacak Pesanan - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="app">
+
+<div class="page active" id="pg-tracking">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="window.location.href='index.html'"><i class="ti ti-arrow-left"></i></button>
+      <h2>Lacak Pesanan</h2>
+    </div>
+    <span style="background:var(--yellow);color:var(--maroon-dark);font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px">2 AKTIF</span>
+  </div>
+  <div class="tracking-tabs" id="tracking-tabs">
+    <div class="tracking-tab active" onclick="switchTrackingTab('semua',this)">Semua Pesanan</div>
+    <div class="tracking-tab" onclick="switchTrackingTab('dikirim',this)">Sedang Dikirim</div>
+    <div class="tracking-tab" onclick="switchTrackingTab('diproses',this)">Diproses</div>
+    <div class="tracking-tab" onclick="switchTrackingTab('selesai',this)">Selesai</div>
+  </div>
+  <div class="tracking-body">
+    <div class="tracking-search-box">
+      <div class="tracking-search-label"><i class="ti ti-search" style="font-size:12px"></i> Cari nomor pesanan atau resi</div>
+      <div class="tracking-search-row">
+        <input class="tracking-input" type="text" id="tracking-input" placeholder="Contoh: #ORD-2846 atau JNE123456">
+        <button class="tracking-btn" onclick="doTracking()"><i class="ti ti-map-pin"></i> Lacak</button>
+      </div>
+      <div class="tracking-quick-label">Pesanan aktif kamu:</div>
+      <div class="tracking-quick-chips">
+        <div class="tracking-chip" onclick="loadTracking('ORD-2846')">#ORD-2846</div>
+        <div class="tracking-chip" onclick="loadTracking('ORD-2845')">#ORD-2845</div>
+        <div class="tracking-chip" onclick="loadTracking('ORD-2844')">#ORD-2844</div>
+      </div>
+    </div>
+
+    <div id="tracking-result-area"></div>
+
+    <!-- DEFAULT: tampilkan semua pesanan aktif -->
+    <div id="tracking-order-list">
+      <div style="padding:4px 16px 6px;font-size:11px;font-weight:800;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.8px">Pesanan Aktif</div>
+
+      <!-- PESANAN 1: Sedang dikirim -->
+      <div class="order-card-track">
+        <div class="oct-header">
+          <div class="oct-order-no">#ORD-2846</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="status-badge-large status-onway"><i class="ti ti-truck-delivery" style="font-size:14px"></i> Sedang Dikirim</div>
+            <div class="oct-courier-badge"><i class="ti ti-package" style="font-size:12px"></i> JNE REG</div>
+          </div>
+        </div>
+        <div class="oct-body">
+          <div class="oct-status-row">
+            <div class="oct-status-icon" style="background:#DBEAFE;color:#1D4ED8"><i class="ti ti-truck-delivery" style="font-size:22px"></i></div>
+            <div class="oct-status-info">
+              <div class="oct-status-label" style="color:#1D4ED8"><span class="status-pulse"><span class="status-pulse-dot" style="background:#1D4ED8"></span>Live update</span></div>
+              <div class="oct-status-title">Paket Dalam Pengiriman</div>
+              <div class="oct-status-sub">Kurir menuju lokasi kamu · Est. tiba jam 17.00 hari ini</div>
+            </div>
+          </div>
+          <div class="oct-items-row">
+            <div class="oct-items-emojis"><span>🥛</span><span>👶</span></div>
+            <div class="oct-items-info">
+              <div class="oct-items-name">Susu SGM 1+ · Pampers Active M</div>
+              <div class="oct-items-count">2 produk · 20 Jun 2026</div>
+            </div>
+            <div class="oct-items-price">Rp187.000</div>
+          </div>
+          <div class="oct-address-row">
+            <i class="ti ti-map-pin"></i>
+            <span>Jl. Raya Darmo No. 45, Wonokromo, Surabaya</span>
+          </div>
+        </div>
+        <button class="oct-expand-btn" onclick="loadTracking('ORD-2846')">
+          <i class="ti ti-map-2"></i> Lihat Detail Pelacakan
+        </button>
+      </div>
+
+      <!-- PESANAN 2: Diproses -->
+      <div class="order-card-track">
+        <div class="oct-header">
+          <div class="oct-order-no">#ORD-2845</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="status-badge-large" style="background:#FEF3C7;color:#92400E"><i class="ti ti-settings" style="font-size:14px"></i> Diproses</div>
+            <div class="oct-courier-badge"><i class="ti ti-package" style="font-size:12px"></i> SICEPAT</div>
+          </div>
+        </div>
+        <div class="oct-body">
+          <div class="oct-status-row">
+            <div class="oct-status-icon" style="background:#FEF3C7;color:#92400E"><i class="ti ti-box" style="font-size:22px"></i></div>
+            <div class="oct-status-info">
+              <div class="oct-status-label" style="color:#92400E">Packing</div>
+              <div class="oct-status-title">Pesanan Dikemas</div>
+              <div class="oct-status-sub">Paket sedang disiapkan di gudang GoMART Surabaya</div>
+            </div>
+          </div>
+          <div class="oct-items-row">
+            <div class="oct-items-emojis"><span>🫙</span><span>🌾</span></div>
+            <div class="oct-items-info">
+              <div class="oct-items-name">Minyak Goreng Bimoli 2L · Beras Ramos 5kg</div>
+              <div class="oct-items-count">2 produk · 15 Jun 2026</div>
+            </div>
+            <div class="oct-items-price">Rp212.000</div>
+          </div>
+          <div class="oct-address-row">
+            <i class="ti ti-map-pin"></i>
+            <span>Jl. Raya Darmo No. 45, Wonokromo, Surabaya</span>
+          </div>
+        </div>
+        <button class="oct-expand-btn" onclick="loadTracking('ORD-2845')">
+          <i class="ti ti-map-2"></i> Lihat Detail Pelacakan
+        </button>
+      </div>
+
+      <div style="padding:4px 16px 6px;font-size:11px;font-weight:800;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.8px;margin-top:6px">Pesanan Selesai</div>
+
+      <!-- PESANAN 3: Selesai -->
+      <div class="order-card-track" style="opacity:0.8">
+        <div class="oct-header" style="background:linear-gradient(135deg,#065F46,#059669)">
+          <div class="oct-order-no">#ORD-2847</div>
+          <div class="status-badge-large status-done"><i class="ti ti-circle-check" style="font-size:14px"></i> Selesai</div>
+        </div>
+        <div class="oct-body">
+          <div class="oct-status-row">
+            <div class="oct-status-icon" style="background:#D1FAE5;color:#065F46"><i class="ti ti-circle-check" style="font-size:22px"></i></div>
+            <div class="oct-status-info">
+              <div class="oct-status-label" style="color:#065F46">Terkirim</div>
+              <div class="oct-status-title">Pesanan Diterima</div>
+              <div class="oct-status-sub">Diterima oleh Umar · 25 Jun 2026, 14.32</div>
+            </div>
+          </div>
+          <div class="oct-items-row">
+            <div class="oct-items-emojis"><span>🍜</span><span>💧</span></div>
+            <div class="oct-items-info">
+              <div class="oct-items-name">Indomie Goreng x3 · Aqua 1500ml x2</div>
+              <div class="oct-items-count">2 produk · 25 Jun 2026</div>
+            </div>
+            <div class="oct-items-price">Rp145.500</div>
+          </div>
+        </div>
+        <button class="oct-expand-btn" onclick="loadTracking('ORD-2847')">
+          <i class="ti ti-history"></i> Lihat Riwayat Pengiriman
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <button class="bnav-btn" onclick="window.location.href='index.html'"><i class="ti ti-home"></i><span>Beranda</span></button>
+    <button class="bnav-btn" onclick="window.location.href='index.html?goto=promo'"><i class="ti ti-tag"></i><span>Promo</span></button>
+    <button class="bnav-btn" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot4" class="bnav-dot" style="display:none">0</span>
+      <span>Keranjang</span>
+    </button>
+    <button class="bnav-btn active"><i class="ti ti-truck-delivery"></i><span>Lacak</span></button>
+    <button class="bnav-btn" onclick="goToAccount()"><i class="ti ti-user-circle"></i><span>Akun</span></button>
+  </div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+<script src="index.js"></script>
+<script>
+  /* Jika dibuka dari halaman lain dengan ?order=ORD-xxxx, langsung tampilkan detail lacaknya */
+  (function(){
+    var params=new URLSearchParams(window.location.search);
+    var order=params.get('order');
+    if(order)loadTracking(order);
+  })();
+</script>
+</body>
+</html>

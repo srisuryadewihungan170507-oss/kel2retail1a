@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ===================== HALAMAN LOGIN ADMIN ===================== -->
+<div class="login-page" id="view-login">
+  <div class="login-box">
+    <div class="login-header">
+      <div class="login-logo">GoMART</div>
+      <p><i class="ti ti-lock"></i> Panel Administrator</p>
+    </div>
+    <div class="login-body">
+      <div class="login-hint"><i class="ti ti-info-circle"></i> Demo: admin / admin123</div>
+      <div class="login-error" id="login-error"><i class="ti ti-alert-circle"></i> <span id="login-error-msg">Username atau password salah</span></div>
+      <div class="form-grp">
+        <label>Username</label>
+        <input type="text" id="login-username" placeholder="Masukkan username" onkeypress="if(event.key==='Enter')doAdminLogin()">
+      </div>
+      <div class="form-grp">
+        <label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="login-password" placeholder="Masukkan password" onkeypress="if(event.key==='Enter')doAdminLogin()">
+          <button type="button" class="pw-toggle" onclick="togglePw()"><i class="ti ti-eye" id="pw-eye-icon"></i></button>
+        </div>
+      </div>
+      <button class="login-btn" onclick="doAdminLogin()"><i class="ti ti-lock"></i> Masuk ke Panel Admin</button>
+    </div>
+    <div class="login-footer">
+      <a href="index.html" style="color:var(--maroon);font-weight:700;cursor:pointer;text-decoration:none"><i class="ti ti-arrow-left"></i> Kembali ke Beranda</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANEL ADMIN ===================== -->
+<div class="admin-app" id="view-admin" style="display:none">
+  <div class="admin-page-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <a class="back-btn" href="index.html"><i class="ti ti-arrow-left"></i></a>
+      <h2>Panel Admin GoMART</h2>
+    </div>
+    <span class="admin-badge">ADMINISTRATOR</span>
+  </div>
+  <div class="admin-wrap">
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <div class="s-name">GoMART Admin</div>
+        <div class="s-sub">Sistem Manajemen Toko</div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Utama</div>
+        <button class="sidebar-link active" onclick="openAdminPanel('dashboard',this)"><i class="ti ti-dashboard"></i> Dashboard</button>
+        <button class="sidebar-link" onclick="openAdminPanel('products',this)"><i class="ti ti-package"></i> Produk</button>
+        <button class="sidebar-link" onclick="openAdminPanel('orders',this)"><i class="ti ti-clipboard-list"></i> Pesanan</button>
+        <a class="sidebar-link" href="kasir.html"><i class="ti ti-cash-register"></i> Kasir</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Pelanggan</div>
+        <button class="sidebar-link" onclick="openAdminPanel('customers',this)"><i class="ti ti-users"></i> Pelanggan</button>
+        <button class="sidebar-link" onclick="openAdminPanel('reviews',this)"><i class="ti ti-star"></i> Ulasan</button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Marketing</div>
+        <button class="sidebar-link" onclick="openAdminPanel('promo',this)"><i class="ti ti-tag"></i> Promo & Diskon</button>
+        <button class="sidebar-link" onclick="openAdminPanel('report',this)"><i class="ti ti-chart-bar"></i> Laporan</button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Sistem</div>
+        <button class="sidebar-link" onclick="openAdminPanel('settings',this)"><i class="ti ti-adjustments"></i> Pengaturan</button>
+        <button class="sidebar-link" onclick="openAdminPanel('help',this)"><i class="ti ti-help"></i> Bantuan</button>
+      </div>
+      <div class="sidebar-logout">
+        <button class="sidebar-link" onclick="adminLogout()" style="color:#FCA5A5"><i class="ti ti-logout"></i> Keluar</button>
+      </div>
+    </div>
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <h2 id="admin-page-title">Dashboard</h2>
+        <div class="admin-user">
+          <div style="font-size:12px;text-align:right">
+            <div style="font-weight:700;color:var(--gray-900)">Admin Toko</div>
+            <div style="color:var(--gray-400);font-size:11px">admin@Gomart.co.id</div>
+          </div>
+          <div class="admin-avatar">AT</div>
+        </div>
+      </div>
+      <div class="admin-body">
+
+        <!-- ===== DASHBOARD ===== -->
+        <div class="admin-panel active" id="panel-dashboard">
+          <div class="stat-row">
+            <div class="stat-card s-red"><div class="stat-icon si-red"><i class="ti ti-currency-dollar"></i></div><div class="stat-val">Rp12,4jt</div><div class="stat-lbl">Pendapatan Hari Ini</div><div class="stat-chg chg-up">↑ +8,3% vs kemarin</div></div>
+            <div class="stat-card s-blue"><div class="stat-icon si-blue"><i class="ti ti-shopping-cart"></i></div><div class="stat-val">87</div><div class="stat-lbl">Total Pesanan Hari Ini</div><div class="stat-chg chg-up">↑ +12 pesanan baru</div></div>
+            <div class="stat-card s-green"><div class="stat-icon si-green"><i class="ti ti-users"></i></div><div class="stat-val">1.243</div><div class="stat-lbl">Pelanggan Aktif</div><div class="stat-chg chg-up">↑ +34 bulan ini</div></div>
+            <div class="stat-card s-orange"><div class="stat-icon si-orange"><i class="ti ti-package"></i></div><div class="stat-val" id="stat-total-prod">0</div><div class="stat-lbl">Produk Tersedia</div><div class="stat-chg chg-warn" id="stat-low-prod">⚠ menghitung...</div></div>
+          </div>
+          <div class="tbl-card">
+            <div class="tbl-head"><h3>Pesanan Terbaru</h3><button class="btn-export"><i class="ti ti-download"></i> Export</button></div>
+            <table>
+              <thead><tr><th>No. Pesanan</th><th>Pelanggan</th><th>Produk</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody>
+                <tr><td>#ORD-2847</td><td>La Ode Umar</td><td>Indomie x3, Aqua x2</td><td>Rp145.500</td><td><span class="st-badge st-active">Selesai</span></td><td><button class="act-btn ab-view" onclick="showToast('📦 Lacak pesanan dari halaman utama')">Lacak</button></td></tr>
+                <tr><td>#ORD-2846</td><td>Zulmawati</td><td>Susu SGM, Pampers M</td><td>Rp187.000</td><td><span class="st-badge st-process">Dikirim</span></td><td><button class="act-btn ab-view" onclick="showToast('📦 Lacak pesanan dari halaman utama')">Lacak</button></td></tr>
+                <tr><td>#ORD-2845</td><td>Sri Surya</td><td>Minyak Goreng, Beras 5kg</td><td>Rp212.000</td><td><span class="st-badge st-low">Diproses</span></td><td><button class="act-btn ab-view" onclick="showToast('📦 Lacak pesanan dari halaman utama')">Lacak</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== PRODUK ===== -->
+        <div class="admin-panel" id="panel-products">
+          <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+            <button class="btn-add" onclick="openModal('add')"><i class="ti ti-plus"></i> Tambah Produk Baru</button>
+          </div>
+          <div class="tbl-card">
+            <div class="tbl-head"><h3>Daftar Produk (<span id="prod-count">0</span> produk)</h3></div>
+            <table><thead><tr><th>Produk</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="admin-prod-tbody"></tbody></table>
+          </div>
+        </div>
+
+        <!-- ===== PESANAN ===== -->
+        <div class="admin-panel" id="panel-orders">
+          <div class="tbl-card">
+            <div class="tbl-head"><h3>Semua Pesanan</h3></div>
+            <table><thead><tr><th>No.</th><th>Pelanggan</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody>
+              <tr><td>#2847</td><td>La Ode Umar</td><td>Rp145.500</td><td><span class="st-badge st-active">Selesai</span></td><td><button class="act-btn ab-view" onclick="showToast('📦 Lacak pesanan dari halaman utama')">Lacak</button></td></tr>
+              <tr><td>#2846</td><td>Zulmawati</td><td>Rp187.000</td><td><span class="st-badge st-process">Dikirim</span></td><td><button class="act-btn ab-view" onclick="showToast('📦 Lacak pesanan dari halaman utama')">Lacak</button></td></tr>
+              <tr><td>#2845</td><td>Sri Surya</td><td>Rp212.000</td><td><span class="st-badge st-low">Diproses</span></td><td><button class="act-btn ab-view" onclick="showToast('📦 Lacak pesanan dari halaman utama')">Lacak</button></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <!-- ===== PELANGGAN ===== -->
+        <div class="admin-panel" id="panel-customers">
+          <div class="tbl-card">
+            <div class="tbl-head"><h3>Data Pelanggan</h3></div>
+            <table><thead><tr><th>Nama</th><th>Email</th><th>Total Order</th><th>Total Belanja</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>La Ode Umar</td><td>umar@gmail.com</td><td>24</td><td>Rp1.250.000</td><td><span class="st-badge st-active">Aktif</span></td></tr>
+              <tr><td>Zulmawati</td><td>zulma@gmail.com</td><td>18</td><td>Rp980.000</td><td><span class="st-badge st-active">Aktif</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <!-- ===== ULASAN ===== -->
+        <div class="admin-panel" id="panel-reviews">
+          <div class="tbl-card">
+            <div class="tbl-head"><h3>Ulasan Pelanggan</h3></div>
+            <table><thead><tr><th>Pelanggan</th><th>Produk</th><th>Bintang</th><th>Ulasan</th></tr></thead>
+            <tbody>
+              <tr><td>La Ode Umar</td><td>Indomie Goreng</td><td>⭐⭐⭐⭐⭐</td><td>Produk original, pengiriman cepat!</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <!-- ===== PROMO ===== -->
+        <div class="admin-panel" id="panel-promo">
+          <div class="tbl-card">
+            <div class="tbl-head"><h3>Daftar Promo Aktif</h3></div>
+            <table><thead><tr><th>Kode</th><th>Deskripsi</th><th>Diskon</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><b>HEMAT50</b></td><td>Diskon 50% semua produk</td><td>50%</td><td><span class="st-badge st-active">Aktif</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <!-- ===== LAPORAN ===== -->
+        <div class="admin-panel" id="panel-report">
+          <div class="stat-row">
+            <div class="stat-card s-red"><div class="stat-icon si-red"><i class="ti ti-calendar-month"></i></div><div class="stat-val">Rp387jt</div><div class="stat-lbl">Pendapatan Bulan Ini</div><div class="stat-chg chg-up">↑ +15%</div></div>
+            <div class="stat-card s-blue"><div class="stat-icon si-blue"><i class="ti ti-shopping-bag"></i></div><div class="stat-val">2.847</div><div class="stat-lbl">Total Transaksi</div><div class="stat-chg chg-up">↑ +234</div></div>
+          </div>
+        </div>
+
+        <!-- ===== PENGATURAN ===== -->
+        <div class="admin-panel" id="panel-settings">
+          <div class="settings-card">
+            <div class="settings-card-head"><i class="ti ti-building-store"></i> Profil Toko</div>
+            <div class="settings-form-grid">
+              <div class="form-grp"><label>Nama Toko</label><input type="text" id="set-store-name" value="GoMART Surabaya Wonokromo"></div>
+              <div class="form-grp"><label>Email Admin</label><input type="text" id="set-store-email" value="admin@Gomart.co.id"></div>
+              <div class="form-grp"><label>Nomor Telepon</label><input type="text" id="set-store-phone" value="031-5678-9012"></div>
+              <div class="form-grp"><label>Jam Operasional</label><input type="text" id="set-store-hours" value="06.00 - 22.00 WIB"></div>
+              <div class="form-grp" style="grid-column:1/-1"><label>Alamat Toko</label><input type="text" id="set-store-address" value="Jl. Raya Darmo No. 45, Wonokromo, Surabaya, Jawa Timur"></div>
+            </div>
+            <div class="settings-save-bar">
+              <button class="btn-cancel" style="flex:none;padding:9px 18px" onclick="showToast('↩️ Perubahan dibatalkan')">Batal</button>
+              <button class="btn-save" style="flex:none;padding:9px 18px" onclick="showToast('✅ Profil toko disimpan!')">💾 Simpan Perubahan</button>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-head"><i class="ti ti-truck-delivery"></i> Pengiriman & Ongkos Kirim</div>
+            <div class="settings-row">
+              <div class="settings-row-info"><div class="settings-row-title">Gratis Ongkir Otomatis</div><div class="settings-row-sub">Aktifkan gratis ongkir untuk transaksi di atas nilai tertentu</div></div>
+              <div class="toggle-switch on" id="tg-freeship" onclick="toggleSetting(this)"><div class="toggle-knob"></div></div>
+            </div>
+            <div class="settings-form-grid" style="grid-template-columns:1fr">
+              <div class="form-grp" style="margin-bottom:0"><label>Minimum Belanja Gratis Ongkir (Rp)</label><input type="number" id="set-freeship-min" value="50000"></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><div class="settings-row-title">Estimasi Pengiriman Cepat</div><div class="settings-row-sub">Tampilkan estimasi tiba dalam 2 jam untuk area terdekat</div></div>
+              <div class="toggle-switch on" id="tg-fastship" onclick="toggleSetting(this)"><div class="toggle-knob"></div></div>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-head"><i class="ti ti-bell"></i> Notifikasi</div>
+            <div class="settings-row">
+              <div class="settings-row-info"><div class="settings-row-title">Notifikasi Pesanan Baru</div><div class="settings-row-sub">Dapatkan notifikasi setiap ada pesanan masuk</div></div>
+              <div class="toggle-switch on" id="tg-notif-order" onclick="toggleSetting(this)"><div class="toggle-knob"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><div class="settings-row-title">Notifikasi Stok Rendah</div><div class="settings-row-sub">Peringatan otomatis saat stok produk menipis</div></div>
+              <div class="toggle-switch on" id="tg-notif-stock" onclick="toggleSetting(this)"><div class="toggle-knob"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><div class="settings-row-title">Notifikasi via Email</div><div class="settings-row-sub">Kirim ringkasan harian ke email admin</div></div>
+              <div class="toggle-switch" id="tg-notif-email" onclick="toggleSetting(this)"><div class="toggle-knob"></div></div>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-head"><i class="ti ti-shield-lock"></i> Keamanan Akun</div>
+            <div class="settings-row">
+              <div class="settings-row-info"><div class="settings-row-title">Verifikasi Dua Langkah (2FA)</div><div class="settings-row-sub">Tambahkan lapisan keamanan ekstra saat login</div></div>
+              <div class="toggle-switch" id="tg-2fa" onclick="toggleSetting(this)"><div class="toggle-knob"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><div class="settings-row-title">Ubah Kata Sandi</div><div class="settings-row-sub">Perbarui kata sandi akun admin secara berkala</div></div>
+              <button class="act-btn ab-edit" onclick="showToast('🔒 Formulir ubah kata sandi dibuka')">Ubah</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== BANTUAN ===== -->
+        <div class="admin-panel" id="panel-help">
+          <div class="help-search-box">
+            <div style="font-size:18px;font-weight:800">Pusat Bantuan Admin GoMART</div>
+            <div style="font-size:12px;opacity:0.85;margin-top:4px">Cari panduan, FAQ, atau hubungi tim support kami</div>
+            <div class="help-search-input">
+              <input type="text" id="help-search-input" placeholder="Cari topik bantuan... mis. 'tambah produk'">
+              <button onclick="showToast('🔍 Mencari topik bantuan...')"><i class="ti ti-search"></i></button>
+            </div>
+          </div>
+          <div class="help-grid">
+            <div class="help-card" onclick="openAdminPanel('products',document.querySelector('.sidebar-link[onclick*=products]'))">
+              <div class="help-card-icon" style="background:#DBEAFE;color:#1D4ED8"><i class="ti ti-package"></i></div>
+              <div class="help-card-title">Kelola Produk</div>
+              <div class="help-card-sub">Cara menambah, mengedit, dan menghapus produk</div>
+            </div>
+            <div class="help-card" onclick="openAdminPanel('orders',document.querySelector('.sidebar-link[onclick*=orders]'))">
+              <div class="help-card-icon" style="background:#D1FAE5;color:#065F46"><i class="ti ti-clipboard-list"></i></div>
+              <div class="help-card-title">Kelola Pesanan</div>
+              <div class="help-card-sub">Memproses, melacak, dan menyelesaikan pesanan</div>
+            </div>
+            <div class="help-card" onclick="openAdminPanel('promo',document.querySelector('.sidebar-link[onclick*=promo]'))">
+              <div class="help-card-icon" style="background:#EDE9FE;color:#5B21B6"><i class="ti ti-tag"></i></div>
+              <div class="help-card-title">Promo & Diskon</div>
+              <div class="help-card-sub">Membuat dan mengatur kode voucher</div>
+            </div>
+            <div class="help-card" onclick="openAdminPanel('settings',document.querySelector('.sidebar-link[onclick*=settings]'))">
+              <div class="help-card-icon" style="background:#FEF3C7;color:#92400E"><i class="ti ti-adjustments"></i></div>
+              <div class="help-card-title">Pengaturan Toko</div>
+              <div class="help-card-sub">Ubah profil toko, ongkir, dan notifikasi</div>
+            </div>
+            <div class="help-card" onclick="showToast('📖 Membuka panduan pembayaran...')">
+              <div class="help-card-icon" style="background:#FCE7F3;color:#9D174D"><i class="ti ti-credit-card"></i></div>
+              <div class="help-card-title">Pembayaran</div>
+              <div class="help-card-sub">Metode pembayaran dan rekonsiliasi</div>
+            </div>
+            <div class="help-card" onclick="showToast('📖 Membuka panduan akun & hak akses...')">
+              <div class="help-card-icon" style="background:#CCFBF1;color:#0F766E"><i class="ti ti-users"></i></div>
+              <div class="help-card-title">Akun & Hak Akses</div>
+              <div class="help-card-sub">Kelola tim admin dan level akses</div>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-head"><i class="ti ti-message-question"></i> Pertanyaan yang Sering Diajukan (FAQ)</div>
+            <div id="faq-list"></div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-head"><i class="ti ti-headset"></i> Hubungi Tim Support</div>
+            <div style="padding:16px 18px">
+              <div class="contact-support-row">
+                <div class="contact-support-btn" onclick="showToast('💬 Membuka live chat support...')"><i class="ti ti-message-circle-2"></i><span>Live Chat</span></div>
+                <div class="contact-support-btn" onclick="showToast('📞 Menghubungi 0800-1-GOMART...')"><i class="ti ti-phone"></i><span>Telepon CS</span></div>
+                <div class="contact-support-btn" onclick="showToast('✉️ Membuka support@gomart.co.id...')"><i class="ti ti-mail"></i><span>Email Support</span></div>
+                <div class="contact-support-btn" onclick="showToast('📄 Membuka dokumentasi admin...')"><i class="ti ti-file-text"></i><span>Dokumentasi</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TAMBAH/EDIT PRODUK -->
+<div class="modal-bg" id="prod-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-title"><i class="ti ti-package"></i> Tambah Produk Baru</h3>
+      <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grp"><label>Nama Produk *</label><input type="text" id="m-name" placeholder="mis. Indomie Goreng Spesial"></div>
+      <div class="form-grp"><label>Brand / Merek</label><input type="text" id="m-brand" placeholder="mis. Indofood"></div>
+      <div class="form-grp">
+        <label>Gambar Produk</label>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div id="m-image-preview" style="width:72px;height:72px;border-radius:10px;overflow:hidden;background:var(--gray-50);border:1.5px dashed var(--gray-200);flex-shrink:0;display:flex;align-items:center;justify-content:center"></div>
+          <div style="flex:1;min-width:0">
+            <input type="text" id="m-image-url" placeholder="images/nama-produk.jpg atau https://..." oninput="updateImagePreview()">
+            <div style="font-size:11px;color:var(--gray-400);margin-top:4px">Kosongkan untuk memakai emoji. Bisa file lokal di folder "images/" atau link gambar (https://...). Jika gambar gagal dimuat, otomatis kembali ke emoji.</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-grp"><label>Harga (Rp) *</label><input type="number" id="m-price" placeholder="3500" min="0"></div>
+        <div class="form-grp"><label>Harga Coret (Rp)</label><input type="number" id="m-old-price" placeholder="4500" min="0"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-grp"><label>Stok</label><input type="number" id="m-stock" placeholder="100" min="0"></div>
+        <div class="form-grp"><label>Label Diskon</label><input type="text" id="m-disc" placeholder="mis. PROMO"></div>
+      </div>
+      <div class="form-grp"><label>Kategori</label>
+        <select id="m-cat" onchange="onCatChange()">
+          <option value="Makanan">Makanan</option><option value="Minuman">Minuman</option>
+          <option value="Kebutuhan">Kebutuhan Rumah</option><option value="Perawatan">Perawatan Diri</option>
+          <option value="Snack">Snack & Camilan</option><option value="Dapur">Bumbu & Dapur</option>
+          <option value="Bayi">Bayi & Anak</option><option value="Kesehatan">Kesehatan</option>
+        </select>
+      </div>
+      <div class="form-grp"><label>Rating (1-5)</label><input type="number" id="m-rating" placeholder="4.8" min="1" max="5" step="0.1"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Batal</button>
+      <button class="btn-save" onclick="saveProduct()">💾 Simpan Produk</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+
+<script src="admin.js"></script>
+</body>
+</html>

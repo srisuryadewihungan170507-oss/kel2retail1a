@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kasir - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="kasir.css">
+</head>
+<body>
+
+<!-- ===================== LOGIN KASIR ===================== -->
+<div class="page active" id="pg-kasirlogin">
+  <div class="login-page">
+    <div class="login-box">
+      <div class="login-header">
+        <div class="login-logo">GoMART</div>
+        <p><i class="ti ti-cash-register"></i> Login Kasir</p>
+      </div>
+      <div class="login-body">
+        <div class="login-hint"><i class="ti ti-info-circle"></i> Demo: kasir / kasir123</div>
+        <div class="login-error" id="kasir-login-error"><i class="ti ti-alert-circle"></i> <span id="kasir-login-error-msg">Username atau password salah</span></div>
+        <div class="form-grp">
+          <label>Username Kasir</label>
+          <input type="text" id="kasir-login-username" placeholder="Masukkan username kasir" onkeypress="if(event.key==='Enter')doKasirLogin()">
+        </div>
+        <div class="form-grp">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="kasir-login-password" placeholder="Masukkan password" onkeypress="if(event.key==='Enter')doKasirLogin()">
+            <button type="button" class="pw-toggle" onclick="togglePwKasir()"><i class="ti ti-eye" id="kasir-pw-eye-icon"></i></button>
+          </div>
+        </div>
+        <button class="login-btn" onclick="doKasirLogin()"><i class="ti ti-cash-register"></i> Masuk ke Halaman Kasir</button>
+      </div>
+      <div class="login-footer">
+        <a href="index.html" style="color:var(--maroon);font-weight:700;cursor:pointer;text-decoration:none"><i class="ti ti-arrow-left"></i> Kembali ke Beranda</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HALAMAN KASIR (POS) ===================== -->
+<div class="page" id="pg-kasir">
+  <div class="ks-header">
+    <div class="ks-hdr-left">
+      <button class="back-btn" onclick="kasirLogout()" title="Keluar dari Kasir"><i class="ti ti-logout"></i></button>
+      <div class="ks-hdr-title"><b>Halaman Kasir</b><span id="ks-hdr-user">Point of Sale - GoMART</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <button class="back-btn" onclick="ksOpenReport()" title="Laporan Penjualan"><i class="ti ti-chart-bar"></i></button>
+      <button class="back-btn" onclick="ksOpenPrintSettings()" title="Pengaturan Cetak Struk"><i class="ti ti-settings"></i></button>
+      <div class="ks-hdr-clock"><b id="ks-clock">--:--:--</b><span id="ks-clockdate">-</span></div>
+    </div>
+  </div>
+
+  <div class="ks-wrap">
+    <!-- KIRI: Produk -->
+    <div class="ks-panel">
+      <div class="ks-panel-title"><i class="ti ti-shopping-bag"></i> Daftar Produk</div>
+      <div class="ks-search-box">
+        <i class="ti ti-search"></i>
+        <input type="text" id="ks-search" placeholder="Cari nama produk..." oninput="renderKasirProducts()">
+      </div>
+      <div class="ks-cat-tabs" id="ks-cat-tabs"></div>
+      <div class="ks-pos-grid" id="ks-prod-grid"></div>
+    </div>
+
+    <!-- KANAN: Transaksi -->
+    <div class="ks-panel">
+      <div class="ks-panel-title"><i class="ti ti-receipt"></i> Transaksi Berjalan</div>
+      <div class="ks-cart-list" id="ks-cart-list"></div>
+
+      <div class="ks-sum-row"><span>Jumlah Jenis Barang</span><span class="ks-sum-badge" id="ks-sum-jenis">0</span></div>
+      <div class="ks-sum-row"><span>Total Qty Barang</span><span class="ks-sum-badge" id="ks-sum-qty">0</span></div>
+      <div class="ks-sum-row"><span>Subtotal</span><span id="ks-sum-subtotal">Rp0</span></div>
+      <div class="ks-sum-row total"><span>Total Bayar</span><span id="ks-sum-total">Rp0</span></div>
+
+      <button class="ks-btn-pay" id="ks-btn-open-pay" onclick="ksOpenPayModal()" disabled><i class="ti ti-cash"></i> Bayar Sekarang</button>
+      <button class="ks-btn-clear" onclick="ksClearCart()"><i class="ti ti-trash"></i> Kosongkan Transaksi</button>
+    </div>
+  </div>
+
+  <!-- MODAL PEMBAYARAN KASIR -->
+  <div class="ks-modal-bg" id="ks-pay-modal">
+    <div class="ks-modal-box">
+      <div class="ks-modal-head">
+        <h3><i class="ti ti-credit-card"></i> Pembayaran</h3>
+        <button class="ks-modal-close" onclick="ksClosePayModal()"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="ks-pay-methods" id="ks-pay-methods">
+        <div class="ks-pay-method active" data-m="cash" onclick="ksSelectPayMethod('cash')"><i class="ti ti-cash"></i>Tunai</div>
+        <div class="ks-pay-method" data-m="qris" onclick="ksSelectPayMethod('qris')"><i class="ti ti-qrcode"></i>QRIS</div>
+        <div class="ks-pay-method" data-m="debit" onclick="ksSelectPayMethod('debit')"><i class="ti ti-credit-card"></i>Debit</div>
+      </div>
+      <div class="ks-sum-row total" style="margin-bottom:10px"><span>Total Tagihan</span><span id="ks-pay-total">Rp0</span></div>
+      <div id="ks-cash-fields">
+        <div class="ks-field">
+          <label>Uang Diterima</label>
+          <input type="number" id="ks-cash-input" placeholder="0" oninput="ksCalcChange()">
+          <div class="ks-quick-cash" id="ks-quick-cash"></div>
+        </div>
+        <div class="ks-change-box" id="ks-change-box">
+          <span class="ks-cb-label" id="ks-cb-label">Kembalian</span>
+          <span class="ks-cb-val" id="ks-change-val">Rp0</span>
+        </div>
+      </div>
+      <button class="ks-btn-pay" id="ks-btn-confirm-pay" onclick="ksConfirmPay()"><i class="ti ti-check"></i> Konfirmasi & Cetak Struk</button>
+    </div>
+  </div>
+
+  <!-- MODAL LAPORAN PENJUALAN -->
+  <div class="ks-modal-bg" id="ks-report-modal">
+    <div class="ks-modal-box ks-report-box">
+      <div class="ks-modal-head">
+        <h3><i class="ti ti-chart-bar"></i> Laporan Penjualan</h3>
+        <button class="ks-modal-close" onclick="ksCloseReport()"><i class="ti ti-x"></i></button>
+      </div>
+      <div id="ks-report-content"></div>
+      <button class="ks-btn-clear" onclick="ksResetReport()"><i class="ti ti-refresh"></i> Reset Laporan</button>
+    </div>
+  </div>
+
+  <!-- MODAL KONFIRMASI BAYAR -->
+  <div class="ks-modal-bg" id="ks-confirm-modal">
+    <div class="ks-modal-box ks-confirm-box">
+      <div class="ks-confirm-icon"><i class="ti ti-help-circle"></i></div>
+      <h3>Konfirmasi Pembayaran</h3>
+      <p>Apakah Anda yakin ingin membayar transaksi ini? Pastikan jumlah dan metode pembayaran sudah benar.</p>
+      <div class="ks-confirm-btns">
+        <button class="ks-confirm-cancel" onclick="ksCloseConfirmModal()">Batal</button>
+        <button class="ks-confirm-ok" onclick="ksProceedPay()"><i class="ti ti-check"></i> Ya, Bayar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL STRUK KASIR -->
+  <div class="ks-modal-bg" id="ks-struk-modal">
+    <div class="ks-modal-box">
+      <div class="ks-modal-head">
+        <h3><i class="ti ti-file-invoice"></i> Struk Belanja</h3>
+        <button class="ks-modal-close" onclick="ksCloseStrukModal()"><i class="ti ti-x"></i></button>
+      </div>
+      <div id="ks-struk-content"></div>
+      <button class="ks-btn-pay" id="ks-btn-print" onclick="ksPrintStruk()"><i class="ti ti-printer"></i> Cetak Struk</button>
+      <button class="ks-btn-clear" id="ks-btn-newtrx" onclick="ksNewTransaction()"><i class="ti ti-plus"></i> Transaksi Baru</button>
+    </div>
+  </div>  <!-- MODAL PENGATURAN CETAK STRUK -->
+  <div class="ks-modal-bg" id="ks-printset-modal">
+    <div class="ks-modal-box">
+      <div class="ks-modal-head">
+        <h3><i class="ti ti-settings"></i> Pengaturan Cetak Struk</h3>
+        <button class="ks-modal-close" onclick="ksClosePrintSettings()"><i class="ti ti-x"></i></button>
+      </div>
+
+      <div class="ks-field">
+        <label>Metode Cetak Default</label>
+        <select id="ps-method" style="width:100%;border:1.5px solid var(--gray-200);border-radius:8px;padding:11px 12px;font-size:13px;font-family:inherit;outline:none">
+          <option value="browser">Cetak via Browser (dialog print biasa)</option>
+          <option value="thermal">Cetak Langsung ke Mesin Printer Struk (QZ Tray)</option>
+        </select>
+      </div>
+
+      <div class="ks-field">
+        <label>Ukuran Kertas</label>
+        <select id="ps-paper-type" onchange="ksTogglePaperTypeFields()" style="width:100%;border:1.5px solid var(--gray-200);border-radius:8px;padding:11px 12px;font-size:13px;font-family:inherit;outline:none">
+          <option value="thermal">Kertas Struk Thermal (lebar tetap, tinggi otomatis)</option>
+          <option value="a4">A4 (210 x 297 mm)</option>
+          <option value="letter">Letter (215.9 x 279.4 mm)</option>
+        </select>
+      </div>
+
+      <div class="ks-field" id="ps-thermal-width-field">
+        <label>Lebar Kertas Struk (mm)</label>
+        <input type="number" id="ps-width" min="30" max="120" step="1" placeholder="80">
+        <div class="ks-quick-cash">
+          <button type="button" onclick="ksSetPaperPreset(58)">58mm</button>
+          <button type="button" onclick="ksSetPaperPreset(80)">80mm</button>
+          <button type="button" onclick="ksSetPaperPreset(112)">112mm</button>
+        </div>
+      </div>
+
+      <div class="ks-field">
+        <label>Margin Kertas (mm)</label>
+        <input type="number" id="ps-margin" min="0" max="20" step="0.5" placeholder="0">
+      </div>
+
+      <div class="ks-field" id="ps-thermal-fields">
+        <label>Nama Printer Thermal (QZ Tray)</label>
+        <input type="text" id="ps-printer-name" placeholder="Contoh: POS-80, EPSON TM-T82">
+        <div class="ks-report-sub" style="margin:8px 0 0;font-size:11px;font-weight:600;color:var(--gray-400)">
+          <i class="ti ti-info-circle"></i>&nbsp;Nama harus sama persis seperti terdaftar di Windows/macOS. Perlu QZ Tray terinstall &amp; aktif.
+        </div>
+      </div>
+
+      <div class="ks-field">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+          <input type="checkbox" id="ps-auto-print" style="width:auto">
+          <span style="text-transform:none;font-weight:600;color:var(--gray-900)">Cetak otomatis setelah pembayaran dikonfirmasi</span>
+        </label>
+      </div>
+
+      <div class="ks-modal-footer" style="padding:0;border:none;margin-top:6px">
+        <button class="btn-cancel" style="flex:1;padding:10px;border-radius:8px;font-weight:700;border:none;cursor:pointer;background:var(--gray-100);color:var(--gray-600)" onclick="ksResetPrintSettings()">Reset Default</button>
+        <button class="btn-save" style="flex:1;padding:10px;border-radius:8px;font-weight:700;border:none;cursor:pointer;background:var(--maroon);color:white;margin-left:10px" onclick="ksSavePrintSettings()">Simpan Pengaturan</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/qz-tray@2.2.4/qz-tray.js"></script>
+<script src="kasir.js"></script>
+</body>
+</html>

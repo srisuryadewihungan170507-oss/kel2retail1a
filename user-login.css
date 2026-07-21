@@ -1,0 +1,43 @@
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --maroon:#7B0000;--maroon-dark:#5A0000;--maroon-light:#9C1A1A;
+  --maroon-pale:#FFF5F5;--maroon-mid:#C13030;
+  --yellow:#FFD700;
+  --white:#FFFFFF;--gray-50:#F9FAFB;--gray-100:#F3F4F6;
+  --gray-200:#E5E7EB;--gray-400:#9CA3AF;--gray-600:#4B5563;--gray-900:#111827;
+}
+body{font-family:'Segoe UI',Arial,sans-serif;color:var(--gray-900);background:#f0f0f0;min-height:100vh}
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--maroon-dark) 0%,var(--maroon) 45%,var(--maroon-light) 100%);padding:20px}
+.login-box{background:white;border-radius:16px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden}
+.login-header{background:var(--maroon);padding:28px 24px;text-align:center;color:white}
+.login-logo{background:var(--yellow);color:var(--maroon-dark);font-weight:900;font-size:22px;padding:6px 14px;border-radius:6px;display:inline-block;margin-bottom:10px}
+.login-header p{font-size:12px;opacity:0.85}
+.login-body{padding:24px}
+.login-error{background:#FEE2E2;color:#B91C1C;font-size:12px;font-weight:700;padding:9px 12px;border-radius:8px;margin-bottom:14px;display:none;align-items:center;gap:6px}
+.login-error.show{display:flex}
+.login-btn{width:100%;background:var(--maroon);color:white;border:none;padding:12px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.login-btn:hover{background:var(--maroon-dark)}
+.login-footer{text-align:center;padding:14px 24px 22px;font-size:11px;color:var(--gray-400)}
+.login-hint{background:var(--maroon-pale);border:1px solid #FECACA;border-radius:8px;padding:10px 12px;font-size:11px;color:var(--maroon-dark);margin-bottom:14px}
+.pw-wrap{position:relative}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:16px}
+.form-grp{margin-bottom:14px}
+.form-grp label{display:block;font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.3px}
+.form-grp input{width:100%;padding:9px 12px;border:1.5px solid var(--gray-200);border-radius:7px;font-size:13px;outline:none;font-family:inherit;color:var(--gray-900);transition:border-color 0.2s}
+.form-grp input:focus{border-color:var(--maroon-mid)}
+.ulogin-tabs{display:flex;background:rgba(255,255,255,0.12);border-radius:8px;padding:3px;margin-top:16px}
+.ulogin-tab{flex:1;text-align:center;padding:8px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.75);cursor:pointer;border-radius:6px;transition:all 0.2s}
+.ulogin-tab.active{background:white;color:var(--maroon-dark)}
+.ulogin-panel{display:none}
+.ulogin-panel.active{display:block}
+.ulogin-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--gray-400);font-size:11px}
+.ulogin-divider::before,.ulogin-divider::after{content:'';flex:1;height:1px;background:var(--gray-200)}
+.ulogin-social-row{display:flex;gap:10px}
+.ulogin-social-btn{flex:1;border:1.5px solid var(--gray-200);background:white;border-radius:8px;padding:10px;font-size:12px;font-weight:700;color:var(--gray-600);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s}
+.ulogin-social-btn:hover{background:var(--gray-50);border-color:var(--gray-400)}
+.ulogin-forgot{text-align:right;margin:-8px 0 14px}
+.ulogin-forgot a{font-size:11px;color:var(--maroon-mid);font-weight:700;cursor:pointer;text-decoration:none}
+.ulogin-forgot a:hover{text-decoration:underline}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--maroon-dark);color:white;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:400;opacity:0;transition:all 0.3s;display:flex;align-items:center;gap:9px;box-shadow:0 6px 20px rgba(0,0,0,0.35);pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast i{color:var(--yellow);font-size:16px}

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="app">
+
+<!-- ===================== HOME PAGE ===================== -->
+<div class="page active" id="pg-home">
+  <div class="top-bar">
+    <span>🚚 Gratis ongkir untuk pembelian min. Rp50.000 · Antar hingga ke pintu rumah</span>
+    <div class="top-bar-links">
+      <a href="#" onclick="goToTracking();return false">Lacak Pesanan</a>
+      <a href="daftar-toko.html"><i class="ti ti-building-store" style="font-size:11px"></i> Daftar Jadi Penjual</a>
+      <a href="#">Unduh Aplikasi</a>
+      <a href="#">Bantuan</a>
+    </div>
+  </div>
+  <header>
+    <div class="header-main" style="max-width:1200px;margin:0 auto;width:100%">
+      <a class="logo" onclick="showPage('home')">
+        <div class="logo-box">Go<span style="color:#B91C1C">MART</span></div>
+      </a>
+      <div class="search-wrap">
+        <input type="text" id="search-input" placeholder="Cari produk, merek, atau kategori..." onkeypress="if(event.key==='Enter')doSearch()">
+        <button onclick="doSearch()"><i class="ti ti-search"></i></button>
+      </div>
+      <div class="header-actions">
+        <button class="hdr-btn" onclick="goToAccount()">
+          <i class="ti ti-user-circle"></i><span>Akun</span>
+        </button>
+        <button class="hdr-btn" onclick="goToCart()">
+          <i class="ti ti-shopping-cart"></i>
+          <span id="cart-dot-hdr" class="bnav-dot" style="display:none;top:-4px;right:-6px">0</span>
+          <span>Keranjang</span>
+        </button>
+      </div>
+    </div>
+    <nav>
+      <div class="nav-inner">
+        <ul class="nav-list">
+          <li><a class="active" onclick="showPage('home');return false"><i class="ti ti-home" style="font-size:13px"></i> Beranda</a></li>
+          <li><a onclick="showPage('Promo');return false"><i class="ti ti-tag" style="font-size:13px"></i> Promo</a></li>
+          <li><a onclick="goToTracking();return false"><i class="ti ti-truck-delivery" style="font-size:13px"></i> Lacak Pesanan</a></li>
+          <li><a onclick="showPage('GoMART');return false"><i class="ti ti-credit-card" style="font-size:13px"></i> GoMART Card</a></li>
+          <li><a onclick="showSubPage('Poin');return false"><i class="ti ti-gift" style="font-size:13px"></i> Poin & Hadiah</a></li>
+          <li><a onclick="goToStoreList();return false"><i class="ti ti-building-store" style="font-size:13px"></i> Toko</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main style="flex:1;overflow-y:auto;padding-bottom:70px">
+    <div class="main-wrap">
+      <div class="hero" style="border-radius:0 0 16px 16px;margin-bottom:0">
+        <div class="hero-inner">
+          <div class="hero-badge">🔥 PROMO SPESIAL MINGGU INI</div>
+          <h1>Belanja Hemat,<br>Hidup <span>Lebih Mudah</span></h1>
+          <p>Belanja ribuan produk kebutuhan sehari-hari dengan harga terbaik dan pengiriman cepat langsung ke pintumu.</p>
+          <div class="hero-btns">
+            <button class="btn-yellow" onclick="scrollToSection('sec-products')"><i class="ti ti-shopping-bag"></i> Belanja Sekarang</button>
+            <button class="btn-outline-white" onclick="goToTracking()"><i class="ti ti-truck-delivery"></i> Lacak Pesanan</button>
+          </div>
+        </div>
+      </div>
+      <div class="promo-strip">
+        <div class="promo-scroll">
+          <div class="promo-item"><i class="ti ti-truck-delivery"></i> Antar ke Pintu</div>
+          <div class="promo-item"><i class="ti ti-clock"></i> Tiba dalam 2 Jam</div>
+          <div class="promo-item"><i class="ti ti-shield-check"></i> Produk 100% Asli</div>
+          <div class="promo-item"><i class="ti ti-refresh"></i> Mudah Retur 7 Hari</div>
+          <div class="promo-item"><i class="ti ti-credit-card"></i> Bayar Banyak Metode</div>
+          <div class="promo-item"><i class="ti ti-headset"></i> CS 24 Jam</div>
+          <div class="promo-item"><i class="ti ti-building-store"></i> 22.000+ Gerai di Indonesia</div>
+        </div>
+      </div>
+      <div id="sec-promo" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 0">
+        <div style="background:linear-gradient(135deg,#7B0000,#C13030);color:white;border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="showPage('gomaretcard')">
+          <div style="font-size:36px">💳</div>
+          <div><div style="font-size:11px;opacity:0.8">Pakai Gomaret Card</div><div style="font-weight:800;font-size:14px">Cashback 10%</div></div>
+        </div>
+        <div style="background:linear-gradient(135deg,#1D4ED8,#3B82F6);color:white;border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="showPage('pembayaran')">
+          <div style="font-size:36px">🚀</div>
+          <div><div style="font-size:11px;opacity:0.8">Gratis Ongkir</div><div style="font-weight:800;font-size:14px">Min. Rp50.000</div></div>
+        </div>
+        <div style="background:linear-gradient(135deg,#065F46,#059669);color:white;border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="goToTracking()">
+          <div style="font-size:36px">📦</div>
+          <div><div style="font-size:11px;opacity:0.8">Cek Status Paket</div><div style="font-weight:800;font-size:14px">Lacak Kurir</div></div>
+        </div>
+      </div>
+      <div class="section" style="margin-top:16px">
+        <div class="sec-head">
+          <div class="sec-title"><i class="ti ti-building-store"></i> Toko Resmi</div>
+          <a class="see-all" onclick="goToStoreList();return false">Lihat Semua <i class="ti ti-arrow-right" style="font-size:12px"></i></a>
+        </div>
+        <div class="home-store-grid" id="home-store-preview"></div>
+      </div>
+      <div class="section" style="margin-top:16px">
+        <div class="sec-head">
+          <div class="sec-title"><i class="ti ti-layout-grid"></i> Kategori Produk</div>
+          <a class="see-all" onclick="showPage('allcategories');return false">Semua Kategori <i class="ti ti-arrow-right" style="font-size:12px"></i></a>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-item" onclick="filterCat('Makanan')"><div class="cat-icon red"><i class="ti ti-bread"></i></div><div class="cat-label">Makanan & Minuman</div></div>
+          <div class="cat-item" onclick="filterCat('Kebutuhan')"><div class="cat-icon blue"><i class="ti ti-home-2"></i></div><div class="cat-label">Kebutuhan Rumah</div></div>
+          <div class="cat-item" onclick="filterCat('Perawatan')"><div class="cat-icon green"><i class="ti ti-heart-rate-monitor"></i></div><div class="cat-label">Perawatan Diri</div></div>
+          <div class="cat-item" onclick="filterCat('Bayi')"><div class="cat-icon purple"><i class="ti ti-baby-carriage"></i></div><div class="cat-label">Bayi & Anak</div></div>
+          <div class="cat-item" onclick="filterCat('Kesehatan')"><div class="cat-icon pink"><i class="ti ti-pill"></i></div><div class="cat-label">Kesehatan</div></div>
+          <div class="cat-item" onclick="filterCat('Dapur')"><div class="cat-icon orange"><i class="ti ti-tools-kitchen-2"></i></div><div class="cat-label">Bumbu & Dapur</div></div>
+          <div class="cat-item" onclick="filterCat('Snack')"><div class="cat-icon teal"><i class="ti ti-cookie"></i></div><div class="cat-label">Snack & Camilan</div></div>
+          <div class="cat-item" onclick="filterCat('Minuman')"><div class="cat-icon yellow"><i class="ti ti-bottle"></i></div><div class="cat-label">Minuman Segar</div></div>
+        </div>
+      </div>
+      
+      <div class="section" id="sec-products">
+        <div class="sec-head">
+          <div class="sec-title" id="sec-products-title"><i class="ti ti-flame"></i> Produk Populer</div>
+          <a class="see-all" onclick="showPage('allproducts');return false">Lihat Semua <i class="ti ti-arrow-right" style="font-size:12px"></i></a>
+        </div>
+        <div id="search-info" style="display:none" class="search-info">
+          <span id="search-info-text"></span>
+          <button class="search-clear" onclick="resetFilter()">× Hapus Filter</button>
+        </div>
+        <div class="prod-grid" id="prod-grid"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== SEMUA KATEGORI PAGE ===================== -->
+<div class="page" id="pg-allcategories">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i></button>
+      <h2>Semua Kategori</h2>
+    </div>
+    <span style="background:var(--yellow);color:var(--maroon-dark);font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px" id="allcat-count-badge">8 KATEGORI</span>
+  </div>
+  <div class="allcat-body">
+    <div class="allcat-search-box">
+      <div class="allcat-search-row">
+        <input type="text" id="allcat-search-input" placeholder="Cari kategori..." oninput="renderAllCategories()">
+        <button onclick="renderAllCategories()"><i class="ti ti-search"></i></button>
+      </div>
+    </div>
+    <div class="allcat-grid" id="allcat-grid"></div>
+  </div>
+  <div class="bottom-nav">
+    <button class="bnav-btn" onclick="showPage('home')"><i class="ti ti-home"></i><span>Beranda</span></button>
+    <button class="bnav-btn" onclick="showPage('promo')"><i class="ti ti-tag"></i><span>Promo</span></button>
+    <button class="bnav-btn" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot6" class="bnav-dot" style="display:none">0</span>
+      <span>Keranjang</span>
+    </button>
+    <button class="bnav-btn" onclick="goToTracking()"><i class="ti ti-truck-delivery"></i><span>Lacak</span></button>
+    <button class="bnav-btn" onclick="goToAccount()"><i class="ti ti-user-circle"></i><span>Akun</span></button>
+  </div>
+</div>
+
+<!-- ===================== SEMUA PRODUK PAGE ===================== -->
+<div class="page" id="pg-allproducts">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i></button>
+      <h2>Semua Produk</h2>
+    </div>
+    <span style="background:var(--yellow);color:var(--maroon-dark);font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px" id="allprod-count-badge">0 PRODUK</span>
+  </div>
+  <div class="allprod-body">
+    <div class="allprod-toolbar">
+      <div class="allprod-search-row">
+        <input type="text" id="allprod-search-input" placeholder="Cari produk atau merek..." oninput="renderAllProducts()" onkeypress="if(event.key==='Enter')renderAllProducts()">
+        <button onclick="renderAllProducts()"><i class="ti ti-search"></i></button>
+      </div>
+      <div class="allprod-filters-row">
+        <div class="allprod-chip-scroll" id="allprod-chip-scroll"></div>
+        <div class="allprod-sort">
+          <select id="allprod-sort-select" onchange="renderAllProducts()">
+            <option value="default">Urutkan: Populer</option>
+            <option value="price-asc">Harga Terendah</option>
+            <option value="price-desc">Harga Tertinggi</option>
+            <option value="rating">Rating Tertinggi</option>
+            <option value="name">Nama A-Z</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="allprod-count-bar" id="allprod-count-bar"></div>
+    <div class="allprod-grid-wrap">
+      <div class="prod-grid" id="allprod-grid"></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <button class="bnav-btn" onclick="showPage('home')"><i class="ti ti-home"></i><span>Beranda</span></button>
+    <button class="bnav-btn" onclick="showPage('promo')"><i class="ti ti-tag"></i><span>Promo</span></button>
+    <button class="bnav-btn" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot7" class="bnav-dot" style="display:none">0</span>
+      <span>Keranjang</span>
+    </button>
+    <button class="bnav-btn" onclick="goToTracking()"><i class="ti ti-truck-delivery"></i><span>Lacak</span></button>
+    <button class="bnav-btn" onclick="goToAccount()"><i class="ti ti-user-circle"></i><span>Akun</span></button>
+  </div>
+</div>
+
+<!-- ===================== PROMO PAGE ===================== -->
+<div class="page" id="pg-promo">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i></button>
+      <h2>Promo & Voucher</h2>
+    </div>
+    <span style="background:var(--yellow);color:var(--maroon-dark);font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px">7 AKTIF</span>
+  </div>
+  <div class="promo-tabs">
+    <div class="promo-tab active" onclick="switchPromoTab('voucher',this)">🎟️ Voucher Saya</div>
+    <div class="promo-tab" onclick="switchPromoTab('cashback',this)">💰 Cashback</div>
+    <div class="promo-tab" onclick="switchPromoTab('gratis',this)">🚚 Gratis Ongkir</div>
+    <div class="promo-tab" onclick="switchPromoTab('semua',this)">📋 Semua Promo</div>
+  </div>
+  <div class="promo-page-body">
+    <div id="promo-tab-voucher" class="promo-section">
+      <div class="promo-hero-banner">
+        <div style="font-size:11px;opacity:0.8;margin-bottom:4px">Voucher tersedia</div>
+        <div style="font-size:22px;font-weight:900;margin-bottom:6px">7 Voucher Aktif 🎉</div>
+        <div style="font-size:12px;opacity:0.85">Gunakan sebelum kedaluwarsa dan hemat lebih banyak!</div>
+      </div>
+      <div id="voucher-list"></div>
+    </div>
+    <div id="promo-tab-flash" class="promo-section" style="display:none">
+      <div class="countdown-box">
+        <div>
+          <div class="countdown-label">Buruan, stok terbatas!</div>
+        </div>
+        <div class="countdown-timer">
+          <div class="count-unit" id="cnt-h">02</div>
+          <span class="count-sep">:</span>
+          <div class="count-unit" id="cnt-m">34</div>
+          <span class="count-sep">:</span>
+          <div class="count-unit" id="cnt-s">17</div>
+        </div>
+      </div>
+      <div class="flash-grid" id="flash-grid"></div>
+    </div>
+    <div id="promo-tab-cashback" class="promo-section" style="display:none">
+      <div class="promo-hero-banner" style="background:linear-gradient(135deg,#1D4ED8,#3B82F6)">
+        <div style="font-size:11px;opacity:0.8;margin-bottom:4px">Program Cashback</div>
+        <div style="font-size:22px;font-weight:900;margin-bottom:6px">Hemat Lebih Banyak 💰</div>
+        <div style="font-size:12px;opacity:0.85">Dapatkan cashback hingga 15% di setiap transaksi!</div>
+      </div>
+      <div style="background:white;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+        <div style="padding:14px 16px;border-bottom:1px solid var(--gray-100);font-size:14px;font-weight:800;color:var(--maroon-dark)">Program Cashback Aktif</div>
+        <div class="pay-method"><div class="pay-method-icon" style="background:#FEF3C7">💳</div><div class="pay-method-info"><div class="pay-method-name">Gomaret Card</div><div class="pay-method-sub">Cashback 10% maks. Rp50.000 · s/d 31 Jul 2026</div></div><span class="pay-method-tag tag-orange">10%</span></div>
+        <div class="pay-method"><div class="pay-method-icon" style="background:#DBEAFE">📱</div><div class="pay-method-info"><div class="pay-method-name">OVO, GoPay, DANA</div><div class="pay-method-sub">Cashback 5% maks. Rp25.000 · s/d 30 Jun 2026</div></div><span class="pay-method-tag tag-blue">5%</span></div>
+      </div>
+    </div>
+    <div id="promo-tab-gratis" class="promo-section" style="display:none">
+      <div class="promo-hero-banner" style="background:linear-gradient(135deg,#065F46,#059669)">
+        <div style="font-size:11px;opacity:0.8;margin-bottom:4px">🚚 Gratis Ongkir</div>
+        <div style="font-size:22px;font-weight:900;margin-bottom:6px">Pesan Sekarang, Gratis!</div>
+        <div style="font-size:12px;opacity:0.85">Belanja min. Rp50.000 dan nikmati gratis ongkir ke seluruh Indonesia!</div>
+      </div>
+    </div>
+    <div id="promo-tab-semua" class="promo-section" style="display:none">
+      <div id="semua-promo-list"></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <button class="bnav-btn" onclick="showPage('home')"><i class="ti ti-home"></i><span>Beranda</span></button>
+    <button class="bnav-btn active"><i class="ti ti-tag"></i><span>Promo</span></button>
+    <button class="bnav-btn" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot3" class="bnav-dot" style="display:none">0</span>
+      <span>Keranjang</span>
+    </button>
+    <button class="bnav-btn" onclick="goToTracking()"><i class="ti ti-truck-delivery"></i><span>Lacak</span></button>
+    <button class="bnav-btn" onclick="goToAccount()"><i class="ti ti-user-circle"></i><span>Akun</span></button>
+  </div>
+</div>
+
+<!-- ===================== GOMARET CARD PAGE ===================== -->
+<div class="page" id="pg-gomaretcard">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i></button>
+      <h2>gomaret Card</h2>
+    </div>
+    <span style="background:var(--yellow);color:var(--maroon-dark);font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px">GOLD MEMBER</span>
+  </div>
+  <div class="promo-page-body">
+    <div class="promo-section">
+
+      <div class="gcv-card">
+        <div class="gcv-top">
+          <div class="gcv-logo">go<span>MART</span> <span class="gcv-logo-sub">CARD</span></div>
+          <i class="ti ti-wifi" style="font-size:20px;transform:rotate(90deg);opacity:0.85"></i>
+        </div>
+        <div class="gcv-chip"><i class="ti ti-cpu" style="font-size:20px"></i></div>
+        <div class="gcv-balance-label">Saldo Kartu</div>
+        <div class="gcv-balance" id="gcv-balance">Rp485.000</div>
+        <div class="gcv-bottom">
+          <div>
+            <div class="gcv-holder-label">Pemegang Kartu</div>
+            <div class="gcv-holder-name">UMAR</div>
+          </div>
+          <div class="gcv-number">•••• •••• •••• 4821</div>
+        </div>
+      </div>
+
+      <div class="gcv-actions">
+        <div class="gcv-action-btn" onclick="topUpGomaretCard()"><i class="ti ti-plus"></i><span>Top Up</span></div>
+        <div class="gcv-action-btn" onclick="showToast('📱 Menampilkan QR kartu untuk dipindai kasir...')"><i class="ti ti-qrcode"></i><span>Scan QR</span></div>
+        <div class="gcv-action-btn" onclick="showToast('📋 Nomor kartu 4821 disalin!')"><i class="ti ti-copy"></i><span>Salin No.</span></div>
+        <div class="gcv-action-btn" onclick="toggleFreezeCard()" id="gcv-freeze-btn"><i class="ti ti-lock"></i><span>Bekukan</span></div>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-card-head"><i class="ti ti-discount-2"></i> Keuntungan gomaret Card</div>
+        <div class="settings-row">
+          <div class="pay-method-icon" style="background:#FEF3C7;flex-shrink:0">💳</div>
+          <div class="settings-row-info"><div class="settings-row-title">Cashback 10% Setiap Transaksi</div><div class="settings-row-sub">Maks. cashback Rp50.000 per transaksi · otomatis masuk saldo</div></div>
+        </div>
+        <div class="settings-row">
+          <div class="pay-method-icon" style="background:#D1FAE5;flex-shrink:0">🚚</div>
+          <div class="settings-row-info"><div class="settings-row-title">Gratis Ongkir Tanpa Minimum</div><div class="settings-row-sub">Berlaku untuk semua pesanan yang dibayar pakai gomaret Card</div></div>
+        </div>
+        <div class="settings-row">
+          <div class="pay-method-icon" style="background:#EDE9FE;flex-shrink:0">🎁</div>
+          <div class="settings-row-info"><div class="settings-row-title">Poin Berlipat 2x</div><div class="settings-row-sub">Dapatkan 2x poin GoMART untuk ditukar hadiah menarik</div></div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-card-head" style="justify-content:space-between;display:flex;align-items:center">
+          <span><i class="ti ti-history"></i> Riwayat Transaksi Kartu</span>
+          <span class="see-all" onclick="showToast('📄 Menampilkan semua riwayat transaksi...')" style="font-size:11px">Lihat Semua</span>
+        </div>
+        <div class="points-history" id="gcv-tx-list"></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <button class="bnav-btn" onclick="showPage('home')"><i class="ti ti-home"></i><span>Beranda</span></button>
+    <button class="bnav-btn" onclick="showPage('promo')"><i class="ti ti-tag"></i><span>Promo</span></button>
+    <button class="bnav-btn" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot5" class="bnav-dot" style="display:none">0</span>
+      <span>Keranjang</span>
+    </button>
+    <button class="bnav-btn" onclick="goToTracking()"><i class="ti ti-truck-delivery"></i><span>Lacak</span></button>
+    <button class="bnav-btn" onclick="goToAccount()"><i class="ti ti-user-circle"></i><span>Akun</span></button>
+  </div>
+</div>
+
+<!-- ===================== PEMBAYARAN PAGE ===================== -->
+<div class="page" id="pg-pembayaran">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="goBackFromPay()"><i class="ti ti-arrow-left"></i></button>
+      <h2>Konfirmasi Pembayaran</h2>
+    </div>
+    <span style="font-size:11px;opacity:0.7" id="pay-step-label">Langkah 1/2</span>
+  </div>
+  <div class="pay-body" id="pay-body-content"></div>
+</div>
+
+<!-- ===================== PROFIL PAGE ===================== -->
+<div class="page" id="pg-profil">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i></button>
+      <h2>Akun Saya</h2>
+    </div>
+  </div>
+  <div class="profil-body">
+    <div class="profile-hero">
+      <div class="avatar-wrap">
+        <div class="p-avatar" id="profil-avatar" onclick="showToast('📷 Pilih foto profil')">L</div>
+        <div class="avatar-cam"><i class="ti ti-camera" style="font-size:12px"></i></div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <div class="user-name" id="profil-name">La Ode Umar</div>
+      <div class="user-email" id="profil-email">umar@gmail.com</div>
+      <div class="user-phone" id="profil-phone"><i class="ti ti-phone" style="font-size:12px"></i> 0812-3456-7890</div>
+      <div class="user-badges">
+        <span class="p-badge pb-gold"><i class="ti ti-crown" style="font-size:11px"></i> Member Gold</span>
+        <span class="p-badge pb-member">Sejak Jan 2024</span>
+      </div>
+      <div class="p-stat-row">
+        <div class="p-stat-item" onclick="showSubPage('pesanan')"><div class="p-stat-num">24</div><div class="p-stat-lbl">Pesanan</div></div>
+        <div class="p-stat-item" onclick="goToTracking()"><div class="p-stat-num">2</div><div class="p-stat-lbl">Dikirim</div></div>
+        <div class="p-stat-item" onclick="showSubPage('poin')"><div class="p-stat-num">1.250</div><div class="p-stat-lbl">Poin</div></div>
+      </div>
+    </div>
+    <div class="p-section" style="margin-top:12px">
+      <div class="p-sec-label">Belanja</div>
+      <div class="p-menu-item" onclick="showSubPage('pesanan')">
+        <div class="p-menu-icon pic-red"><i class="ti ti-clipboard-list"></i></div>
+        <div class="p-menu-text"><div class="p-menu-title">Riwayat Pesanan</div><div class="p-menu-sub">24 pesanan selesai</div></div>
+        <i class="ti ti-chevron-right p-menu-arrow"></i>
+      </div>
+      <div class="p-menu-item" onclick="goToTracking()">
+        <div class="p-menu-icon pic-blue"><i class="ti ti-truck-delivery"></i></div>
+        <div class="p-menu-text"><div class="p-menu-title">Lacak Pesanan</div><div class="p-menu-sub">2 pesanan sedang dikirim</div></div>
+        <span class="p-menu-tag" style="background:#DBEAFE;color:#1D4ED8;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:800">2 Aktif</span>
+        <i class="ti ti-chevron-right p-menu-arrow" style="margin-left:8px"></i>
+      </div>
+      <div class="p-menu-item" onclick="showPage('promo')">
+        <div class="p-menu-icon pic-orange"><i class="ti ti-ticket"></i></div>
+        <div class="p-menu-text"><div class="p-menu-title">Voucher & Promo</div><div class="p-menu-sub">3 voucher aktif</div></div>
+        <i class="ti ti-chevron-right p-menu-arrow"></i>
+      </div>
+      <div class="p-menu-item" onclick="showPage('gomaretcard')">
+        <div class="p-menu-icon pic-red"><i class="ti ti-credit-card"></i></div>
+        <div class="p-menu-text"><div class="p-menu-title">gomaret Card</div><div class="p-menu-sub">Saldo: Rp485.000</div></div>
+        <i class="ti ti-chevron-right p-menu-arrow"></i>
+      </div>
+      <div class="p-menu-item" onclick="showSubPage('wishlist')">
+        <div class="p-menu-icon pic-purple"><i class="ti ti-heart"></i></div>
+        <div class="p-menu-text"><div class="p-menu-title">Wishlist</div><div class="p-menu-sub" id="wishlist-menu-sub">Belum ada produk favorit</div></div>
+        <i class="ti ti-chevron-right p-menu-arrow"></i>
+      </div>
+      <div class="p-menu-item" onclick="window.location.href='admin.html'">
+        <div class="p-menu-icon pic-red"><i class="ti ti-lock"></i></div>
+        <div class="p-menu-text"><div class="p-menu-title">Panel Admin</div><div class="p-menu-sub">Khusus administrator toko</div></div>
+        <i class="ti ti-chevron-right p-menu-arrow"></i>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="doUserLogout()">
+      <i class="ti ti-logout"></i> Keluar dari Akun
+    </button>
+    <div style="height:24px"></div>
+  </div>
+  <div class="bottom-nav">
+    <button class="bnav-btn" onclick="showPage('home')"><i class="ti ti-home"></i><span>Beranda</span></button>
+    <button class="bnav-btn" onclick="showPage('promo')"><i class="ti ti-tag"></i><span>Promo</span></button>
+    <button class="bnav-btn" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot2" class="bnav-dot" style="display:none">0</span>
+      <span>Keranjang</span>
+    </button>
+    <button class="bnav-btn" onclick="goToTracking()"><i class="ti ti-truck-delivery"></i><span>Lacak</span></button>
+    <button class="bnav-btn active"><i class="ti ti-user-circle"></i><span>Akun</span></button>
+  </div>
+</div>
+
+<!-- ===================== SUB-PAGES ===================== -->
+<div class="page" id="pg-subpage">
+  <div class="pg-header">
+    <button class="back-btn" id="subpage-back-btn"><i class="ti ti-arrow-left"></i></button>
+    <h2 id="subpage-title">Detail</h2>
+  </div>
+  <div class="subpage-body" id="subpage-content"></div>
+</div>
+
+<!-- ===================== DETAIL PRODUK PAGE ===================== -->
+<div class="page" id="pg-productdetail">
+  <div class="pg-header" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="goBackFromProductDetail()"><i class="ti ti-arrow-left"></i></button>
+      <h2>Detail Produk</h2>
+    </div>
+    <button class="hdr-btn" style="color:white" onclick="goToCart()">
+      <i class="ti ti-shopping-cart"></i>
+      <span id="cart-dot-pd" class="bnav-dot" style="display:none;top:-4px;right:-6px">0</span>
+    </button>
+  </div>
+  <div class="pd-body" id="pd-body"></div>
+</div>
+
+</div>
+
+<!-- MODAL "APAKAH ANDA YAKIN INGIN MEMBAYAR?" -->
+<div class="ays-overlay" id="ays-overlay">
+  <div class="ays-box">
+    <div class="ays-icon"><i class="ti ti-help-circle"></i></div>
+    <h3>Konfirmasi Pembayaran</h3>
+    <p>Apakah Anda yakin ingin membayar pesanan ini? Pastikan metode pembayaran sudah sesuai.</p>
+    <div class="ays-total" id="ays-total">Rp0</div>
+    <div class="ays-btns">
+      <button class="ays-cancel" onclick="closeAreYouSurePay()">Batal</button>
+      <button class="ays-ok" onclick="confirmPayment()"><i class="ti ti-check"></i> Ya, Bayar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL KONFIRMASI PEMBAYARAN -->
+<div class="pay-confirm-overlay" id="pay-confirm-overlay">
+  <div class="pay-confirm-box">
+    <div class="pcb-check-wrap">
+      <div class="pcb-check-circle"><i class="ti ti-check"></i></div>
+      <div class="pcb-title">Pembayaran Berhasil!</div>
+      <div class="pcb-sub">Pesananmu sedang diproses</div>
+    </div>
+    <div class="pcb-body">
+      <div class="pcb-order-no"><i class="ti ti-receipt"></i> <span id="pcb-order-no-text">#ORD-0000</span></div>
+      <div class="pcb-row"><span>Metode Pembayaran</span><span id="pcb-method">-</span></div>
+      <div class="pcb-row"><span>Tanggal</span><span id="pcb-date">-</span></div>
+      <div class="pcb-row"><span>Jumlah Produk</span><span id="pcb-item-count">-</span></div>
+      <div class="pcb-total-row"><span>Total Dibayar</span><span id="pcb-total">Rp0</span></div>
+      <div class="pcb-actions">
+        <button class="pcb-btn-primary" onclick="closePayConfirm();goToTracking()"><i class="ti ti-truck-delivery"></i> Lacak Pesanan Sekarang</button>
+        <button class="pcb-btn-secondary" onclick="closePayConfirm();showPage('home')">Lanjut Belanja</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+
+<script src="index.js"></script>
+</body>
+</html>

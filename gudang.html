@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gudang - GoMART</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="gudang.css">
+</head>
+<body>
+
+<!-- ===================== LOGIN GUDANG ===================== -->
+<div class="page active" id="pg-gudanglogin">
+  <div class="login-page">
+    <div class="login-box">
+      <div class="login-header">
+        <div class="login-logo">GoMART</div>
+        <p><i class="ti ti-building-warehouse"></i> Login Petugas Gudang</p>
+      </div>
+      <div class="login-body">
+        <div class="login-hint"><i class="ti ti-info-circle"></i> Demo: gudang / gudang123</div>
+        <div class="login-error" id="gd-login-error"><i class="ti ti-alert-circle"></i> <span id="gd-login-error-msg">Username atau password salah</span></div>
+        <div class="form-grp">
+          <label>Username Gudang</label>
+          <input type="text" id="gd-login-username" placeholder="Masukkan username gudang" onkeypress="if(event.key==='Enter')doGudangLogin()">
+        </div>
+        <div class="form-grp">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="gd-login-password" placeholder="Masukkan password" onkeypress="if(event.key==='Enter')doGudangLogin()">
+            <button type="button" class="pw-toggle" onclick="togglePwGudang()"><i class="ti ti-eye" id="gd-pw-eye-icon"></i></button>
+          </div>
+        </div>
+        <button class="login-btn" onclick="doGudangLogin()"><i class="ti ti-building-warehouse"></i> Masuk ke Halaman Gudang</button>
+      </div>
+      <div class="login-footer">
+        <a href="index.html" style="color:var(--maroon);font-weight:700;cursor:pointer;text-decoration:none"><i class="ti ti-arrow-left"></i> Kembali ke Beranda</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HALAMAN GUDANG ===================== -->
+<div class="page" id="pg-gudang">
+  <div class="gd-header">
+    <div class="gd-hdr-left">
+      <button class="back-btn" onclick="gudangLogout()" title="Keluar dari Gudang"><i class="ti ti-logout"></i></button>
+      <div class="gd-hdr-title"><b>Halaman Gudang</b><span id="gd-hdr-user">Manajemen Stok - GoMART</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <a href="kasir.html" class="back-btn" title="Buka Halaman Kasir" style="text-decoration:none"><i class="ti ti-cash-register"></i></a>
+      <div class="gd-hdr-clock"><b id="gd-clock">--:--:--</b><span id="gd-clockdate">-</span></div>
+    </div>
+  </div>
+
+  <div class="gd-wrap">
+    <!-- STATISTIK RINGKAS -->
+    <div class="gd-stats">
+      <div class="gd-stat">
+        <div class="gd-stat-icon" style="background:var(--maroon-pale);color:var(--maroon-dark)"><i class="ti ti-package"></i></div>
+        <div><div class="gd-stat-val" id="gd-stat-total">0</div><div class="gd-stat-lbl">Total Produk</div></div>
+      </div>
+      <div class="gd-stat">
+        <div class="gd-stat-icon" style="background:#FEF3C7;color:#92400E"><i class="ti ti-alert-triangle"></i></div>
+        <div><div class="gd-stat-val" id="gd-stat-low">0</div><div class="gd-stat-lbl">Stok Menipis (&lt;20)</div></div>
+      </div>
+      <div class="gd-stat">
+        <div class="gd-stat-icon" style="background:#D1FAE5;color:#065F46"><i class="ti ti-boxes"></i></div>
+        <div><div class="gd-stat-val" id="gd-stat-units">0</div><div class="gd-stat-lbl">Total Unit di Gudang</div></div>
+      </div>
+    </div>
+
+    <div class="gd-panel">
+      <div class="gd-panel-title"><i class="ti ti-package-plus"></i> Masukkan Barang Baru ke Sistem</div>
+      <div class="gd-form-row">
+        <div class="gd-form-grp">
+          <label>Nama Barang</label>
+          <input type="text" id="gd-new-nama" placeholder="Contoh: Kecap Manis ABC 275ml">
+        </div>
+        <div class="gd-form-grp">
+          <label>Merek / Brand</label>
+          <input type="text" id="gd-new-brand" placeholder="Contoh: ABC">
+        </div>
+      </div>
+      <div class="gd-form-row">
+        <div class="gd-form-grp">
+          <label>Kategori</label>
+          <input type="text" id="gd-new-kategori" placeholder="Contoh: Dapur" list="gd-cat-datalist">
+          <datalist id="gd-cat-datalist"></datalist>
+        </div>
+        <div class="gd-form-grp">
+          <label>Emoji Ikon <span class="opt">(opsional)</span></label>
+          <input type="text" id="gd-new-emoji" placeholder="Contoh: 🍯" maxlength="4">
+        </div>
+      </div>
+      <div class="gd-form-row gd-form-row-3">
+        <div class="gd-form-grp">
+          <label>Berat / Isi Bersih (gram)</label>
+          <input type="number" min="1" id="gd-new-berat" placeholder="Contoh: 275">
+        </div>
+        <div class="gd-form-grp">
+          <label>Harga Jual (Rp)</label>
+          <input type="number" min="0" id="gd-new-harga" placeholder="Contoh: 14500">
+        </div>
+        <div class="gd-form-grp">
+          <label>Stok Awal</label>
+          <input type="number" min="0" id="gd-new-stok" placeholder="Contoh: 50">
+        </div>
+      </div>
+      <div class="gd-form-grp">
+        <label>Deskripsi / Catatan <span class="opt">(opsional)</span></label>
+        <textarea id="gd-new-deskripsi" placeholder="Catatan tambahan tentang barang ini"></textarea>
+      </div>
+      <button class="gd-btn-add-item" onclick="gdTambahBarangBaru()"><i class="ti ti-plus"></i> Masukkan Barang ke Sistem</button>
+    </div>
+
+    <div class="gd-panel">
+      <div class="gd-panel-title"><i class="ti ti-package-import"></i> Input Stok Barang Masuk</div>
+      <div class="gd-search-box">
+        <i class="ti ti-search"></i>
+        <input type="text" id="gd-search" placeholder="Cari nama produk..." oninput="renderGudangList()">
+      </div>
+      <div class="gd-cat-tabs" id="gd-cat-tabs"></div>
+      <div class="gd-gudang-list" id="gd-gudang-list"></div>
+    </div>
+
+    <div class="gd-panel">
+      <div class="gd-panel-title"><i class="ti ti-history"></i> Riwayat Barang Masuk</div>
+      <div class="gd-gudang-history" id="gd-gudang-history"></div>
+      <button class="gd-btn-clear" onclick="gdResetHistory()"><i class="ti ti-refresh"></i> Reset Riwayat</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toast-msg">Berhasil</span></div>
+
+<script src="gudang.js"></script>
+</body>
+</html>
